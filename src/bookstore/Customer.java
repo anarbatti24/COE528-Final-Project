@@ -175,7 +175,7 @@ public class Customer {
     //same idea as Book.toString()
      
     @Override
-    public String toString() {
+    public  String toString() {
         return username + "," + password + "," + points;
     }
 }
