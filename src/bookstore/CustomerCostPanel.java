@@ -4,38 +4,67 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Customer cost screen. Shown after a purchase.
- * Top: "Total Cost: TC"
- * Middle: "Points: P, Status: S"
- * Bottom: Logout button
+ * Customer cost screen — shown after a purchase transaction.
+ *
+ * Spec requirement:
+ * "When the customer clicks either [Buy] or [Redeem Points and Buy],
+ * a new screen replaces the customer-start-screen. We call this new screen
+ * customer-cost-screen. This screen has three GUI items from top to bottom:
+ *
+ * Top item: The message 'Total Cost: TC'. TC is the total transaction cost.
+ * There is no tax.
+ *
+ * Middle item: The message 'Points: P, Status: S'. P is the current number
+ * of points. S is the current status (Gold or Silver).
+ *
+ * Bottom item: A [Logout] button. If the customer clicks [Logout], she should
+ * be taken back to the login-screen."
+ *
+ * The data displayed here is set by CustomerStartPanel right before switching
+ * to this screen, via the setData() method.
  */
 public class CustomerCostPanel extends JPanel {
 
-    private BookStoreGUI parentGUI;
-    private JLabel costLabel;
-    private JLabel pointsLabel;
+    private BookStoreGUI parentGUI;  // reference to the main frame for screen switching
+    private JLabel costLabel;        // displays "Total Cost: TC"
+    private JLabel pointsLabel;      // displays "Points: P, Status: S"
 
+    /**
+     * Constructs the customer cost panel with cost label, points/status label,
+     * and logout button.
+     *
+     * @param parent the main BookStoreGUI frame
+     */
     public CustomerCostPanel(BookStoreGUI parent) {
         this.parentGUI = parent;
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15);
-        gbc.gridx = 0;
 
-        // Total cost label
+        // Stack items vertically using BoxLayout
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createEmptyBorder(80, 50, 80, 50));
+
+        // --- Total cost label ---
+        // Shows the transaction cost (sum of selected books, minus any redemption)
         costLabel = new JLabel("Total Cost: 0");
-        gbc.gridy = 0;
-        add(costLabel, gbc);
+        costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(costLabel);
 
-        // Points and status label
+        add(Box.createVerticalStrut(20)); // spacer
+
+        // --- Points and status label ---
+        // Shows the customer's updated point total and Gold/Silver status
+        // AFTER the transaction has been processed
         pointsLabel = new JLabel("Points: 0, Status: Silver");
-        gbc.gridy = 1;
-        add(pointsLabel, gbc);
+        pointsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(pointsLabel);
 
-        // Logout button
+        add(Box.createVerticalStrut(20)); // spacer
+
+        // --- Logout button ---
+        // Spec: "If the customer clicks [Logout], she should be taken back
+        // to the login-screen."
         JButton logoutButton = new JButton("Logout");
-        gbc.gridy = 2;
-        add(logoutButton, gbc);
+        logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(logoutButton);
 
         logoutButton.addActionListener(e -> {
             parentGUI.showScreen("LOGIN");
@@ -44,10 +73,11 @@ public class CustomerCostPanel extends JPanel {
 
     /**
      * Sets the data to display after a transaction.
-     * Called from CustomerStartPanel right before switching here.
+     * Called from CustomerStartPanel right before switching to this screen.
      *
-     * @param c    the customer who just bought
-     * @param cost the total cost returned by buyBook() or redeemAndBuy()
+     * @param c    the customer who just completed a purchase
+     * @param cost the total transaction cost returned by buyBook() or redeemAndBuy()
+     *             (for [Redeem Points and Buy], this is the cost AFTER redemption)
      */
     public void setData(Customer c, double cost) {
         costLabel.setText("Total Cost: " + cost);
