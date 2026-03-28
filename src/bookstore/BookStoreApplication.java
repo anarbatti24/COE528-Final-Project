@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 /**
  * Main application class.
- * Holds the inventory and customers lists as static fields
- * so Owner and other classes can access them directly.
+ * Holds the inventory and customers lists as static fields.
  * Handles file I/O and launches the GUI.
  */
 public class BookStoreApplication {
@@ -18,7 +17,6 @@ public class BookStoreApplication {
 
     /**
      * Loads books from books.txt and customers from customers.txt.
-     * Each line is comma-separated.
      * books.txt format:    BookName,Price
      * customers.txt format: Username,Password,Points
      */
@@ -65,7 +63,7 @@ public class BookStoreApplication {
 
     /**
      * Saves all books to books.txt and all customers to customers.txt.
-     * Overwrites old data each time, as suggested by the spec.
+     * Overwrites old data each time.
      */
     public static void saveData() {
         // Save customers
@@ -79,7 +77,7 @@ public class BookStoreApplication {
             System.out.println("Error saving customers: " + e.getMessage());
         }
 
-        // Save books — note: "books.txt", NOT "customers.txt"
+        // Save books
         try {
             FileWriter writer = new FileWriter("books.txt");
             for (int i = 0; i < inventory.size(); i++) {
@@ -107,19 +105,14 @@ public class BookStoreApplication {
     public static void main(String[] args) {
         // Initialize the singleton owner
         Owner.getInstance();
-        
-        Owner.addBook(new Book("Harry Potter", 19.95));
 
         // Load saved data from files
         loadData();
-        saveData();
 
-        /**
-        // Launch the GUI on the Swing event thread
+        // Launch the GUI
         javax.swing.SwingUtilities.invokeLater(() -> {
             BookStoreGUI gui = new BookStoreGUI();
             gui.setVisible(true);
         });
-        */
     }
 }
