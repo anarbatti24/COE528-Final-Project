@@ -1,0 +1,4 @@
+Eric,Cartman,108
+Randy,Marsh,529
+Spongebob,Squarepants,338
+Patrick,Star,638

@@ -39,7 +39,7 @@ public class CustomerCostPanel extends JPanel {
 
     /** Sets the transaction results. Called from CustomerStartPanel before switching here. */
     public void setData(Customer c, double cost) {
-        costLabel.setText("Total Cost: " + cost);
+        costLabel.setText("Total Cost: " + String.format("%.2f", cost));
         pointsLabel.setText("Points: " + c.getPoints() + ", Status: " + c.getStatusName());
     }
 }

@@ -1,0 +1,4 @@
+Harry Potter,19.99
+1984,9.99
+The Road,22.99
+GoldMaker,100.0
