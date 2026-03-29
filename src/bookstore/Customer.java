@@ -16,6 +16,12 @@ public class Customer {
     private int points;
     private CustomerState status;
 
+    /**
+     * Constructor method for a customer
+     * @param username  The username we are assigning to the customer
+     * @param password  The password we are assigning to the customer
+     * @param points    The number of points the customer has
+     */
     public Customer(String username, String password, int points) {
         this.username = username;
         this.password = password;
@@ -24,17 +30,29 @@ public class Customer {
         this.status = (points >= 1000) ? new GoldStatus() : new SilverStatus();
     }
 
+    /**
+     * Getter methods for the customer
+     */
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public int getPoints() { return points; }
     public CustomerState getStatus() { return status; }
 
+    /**
+     * Method to set the number of points a customer has
+     * @param points the number of points we are trying to set
+     */
     public void setPoints(int points) { this.points = points; }
 
-    /** Called by GoldStatus/SilverStatus to swap the state object */
+    /** 
+     * Called by GoldStatus/SilverStatus to swap the state object 
+     * @param status The status we are updating the customer to
+     */
     public void setStatus(CustomerState status) { this.status = status; }
 
-    /** Returns "Gold" or "Silver" for GUI display */
+    /** 
+     * Returns "Gold" or "Silver" for GUI display 
+     */
     public String getStatusName() {
         return (status instanceof GoldStatus) ? "Gold" : "Silver";
     }
@@ -42,6 +60,8 @@ public class Customer {
     /**
      * Buy books without redeeming points.
      * Earns 10 points per dollar spent, then updates state.
+     * @param books The book they are trying to buy
+     * @return The total cost of their transaction
      */
     public double buyBook(ArrayList<Book> books) {
         double tc = 0;
@@ -58,6 +78,8 @@ public class Customer {
      * Redeem all possible points, then buy books.
      * 100 points = 1 CAD off. TC cannot go below 0.
      * Earns 10 points per dollar of the remaining cost after redemption.
+     * @param books The book the customer is trying to buy
+     * @return The total cost of their transaction
      */
     public double redeemAndBuy(ArrayList<Book> books) {
         double tc = 0;
