@@ -18,10 +18,16 @@ public class BookStoreApplication {
     protected static ArrayList<Book> inventory = new ArrayList<Book>();
     protected static ArrayList<Customer> customers = new ArrayList<Customer>();
 
-    /** Loads books and customers from text files into the ArrayLists. */
+    /**
+     * Method to load in data from books.txt and customers.txt
+     */
     public static void loadData() {
+
+        //Checking to make sure the file exists
         if (customerFile.exists()) {
             try (Scanner reader = new Scanner(customerFile)) {
+
+                //Reading contents from the file
                 while (reader.hasNextLine()) {
                     String line = reader.nextLine().trim();
                     if (!line.isEmpty()) {
@@ -38,6 +44,7 @@ public class BookStoreApplication {
             }
         }
 
+        //Reading from book file
         if (bookFile.exists()) {
             try (Scanner reader = new Scanner(bookFile)) {
                 while (reader.hasNextLine()) {
@@ -57,7 +64,9 @@ public class BookStoreApplication {
         }
     }
 
-    /** Saves all data to text files. Overwrites old data each time (spec requirement). */
+    /** 
+     * Saves all data to text files. Overwrites old data each time (spec requirement). 
+     */
     public static void saveData() {
         try {
             FileWriter writer = new FileWriter("customers.txt");
@@ -78,7 +87,11 @@ public class BookStoreApplication {
         }
     }
 
-    /** Finds a customer by username+password. Returns null if not found. */
+    /** 
+     * Finds a customer by username+password. Returns null if not found.
+     * @param username The username of the customer we are trying to find
+     * @param passowrd The password of the customer we are trying to find
+     */
     public static Customer findCustomer(String username, String password) {
         for (Customer c : customers) {
             if (c.getUsername().equals(username) && c.getPassword().equals(password))
