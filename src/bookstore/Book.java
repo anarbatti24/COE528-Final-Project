@@ -10,12 +10,24 @@ public class Book {
     private String name;
     private double price;
 
+    /**
+     * Constructor for the function
+     * @param name     The name of the book
+     * @param price     The price of the book
+     */
     public Book(String name, double price) {
         this.name = name;
         this.price = price;
     }
 
+    /**
+     * Getter method for the name
+     */
     public String getName() { return name; }
+
+    /**
+     * Getter method for the price
+     */
     public double getPrice() { return price; }
 
     // No setters — spec says books can only be added or deleted, not edited.
